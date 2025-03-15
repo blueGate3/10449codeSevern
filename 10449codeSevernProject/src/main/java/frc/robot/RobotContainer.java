@@ -12,6 +12,8 @@ public class RobotContainer {
   XboxController driverController;
   Cradle m_cradle = new Cradle(9);
   TankDrivetrain m_drivetrain = new TankDrivetrain();
+
+  Drivetrain m_swerve = new Drivetrain();
   public RobotContainer() {
     driverController = new XboxController(0);
   }
@@ -20,6 +22,20 @@ public class RobotContainer {
     m_drivetrain.drive(
       -driverController.getRawAxis(1), 
       driverController.getRawAxis(3)); //TODO will need to fix when we get there
+
+    if(driverController.getRawButton(0)) { //"A" button runs cradle
+      m_cradle.runCradle(.2);
+    } else {
+      m_cradle.runCradle(0);
+    }
+  }
+
+  public void runRobotSwerve() {
+    m_swerve.drive(
+    -Math.pow(driverController.getRawAxis(0), 3),
+    -Math.pow(driverController.getRawAxis(1), 3), 
+    -Math.pow(driverController.getRawAxis(4), 3),
+    true, false, false);
 
     if(driverController.getRawButton(0)) { //"A" button runs cradle
       m_cradle.runCradle(.2);
